@@ -1,0 +1,22 @@
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# compiled output
+# output
+npm-debug.log
+.DS_Store
+
+app/**/*.js
+hooks/
+typings/
+report/
+platforms/
