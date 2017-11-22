@@ -2,12 +2,12 @@ import {Component} from "@angular/core";
 
 @Component({
     selector: "app-spent-form",
-    template: `
-        <StackLayout>
-            <Label text="Add item" class="title"></Label>
-            <Label text="Cancel" class="title" [nsRouterLink]="['/last-spent']"></Label>
-        </StackLayout>
-    `
+    templateUrl: "./spent-form.component.html",
+    styleUrls: ["./spent-form.component.css"],
 })
 export class SpentFormComponent {
+
+    submit() {
+        console.log("Save");
+    }
 }
