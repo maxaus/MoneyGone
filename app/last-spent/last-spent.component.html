@@ -4,7 +4,7 @@
             <GridLayout columns="50px,*,*" class="list-group-item">
                 <Label col="0" [text]="item.title"></Label>
                 <Button col="1" text="Edit" (tap)="editItem(item.id)"></Button>
-                <Button col="2" text="Delete"></Button>
+                <Button col="2" text="Delete" (tap)="deleteItem(item.id)"></Button>
             </GridLayout>
         </ng-template>
     </ListView>

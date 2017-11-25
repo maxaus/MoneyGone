@@ -22,7 +22,7 @@ export class SpentItemService {
         });
     }
 
-    public create(item: SpentItem) {
+    public create(item: SpentItem): Promise<SpentItem> {
         return this.database.execSQL("INSERT INTO spent (title, sum, dateAdded, excludeFromSum) VALUES (?, ?, ?, ?)",
             [item.title, item.sum, item.date, item.excludeFromSum])
             .then(id => {
@@ -34,11 +34,43 @@ export class SpentItemService {
             });
     }
 
+    public update(item: SpentItem): Promise<SpentItem> {
+        return this.database.execSQL("UPDATE spent SET title=?, sum=?, dateAdded=?, excludeFromSum=? WHERE id=?",
+            [item.title, item.sum, item.date, item.excludeFromSum, item.id])
+            .then(id => {
+                console.log("UPDATE RESULT", id);
+
+                return item;
+            }, error => {
+                console.log("UPDATE ERROR", error);
+            });
+    }
+
+    public delete(id: number): Promise<null> {
+        return this.database.execSQL("DELETE FROM spent WHERE id=?", [id])
+            .then(() => {
+                console.log("REMOVED", id);
+                return null;
+            }, error => {
+                console.log("DELETE ERROR", error);
+            });
+    }
+
+    public getById(id: number): Promise<SpentItem> {
+        return this.database.get("SELECT * FROM spent WHERE id=?", [id])
+            .then(row => {
+                console.log(JSON.stringify(row));
+                return new SpentItem(row[0], row[1], row[2], row[3], row[4]);
+            }, error => {
+                console.log("SELECT ERROR", error);
+            })
+    }
+
     public getAll(): Promise<SpentItem[]> {
         return this.database.all("SELECT * FROM spent")
             .then(rows => {
                 var items = [];
-                for(var row in rows) {
+                for (var row in rows) {
                     items.push(new SpentItem(rows[row][0], rows[row][1], rows[row][2], rows[row][3], rows[row][4]));
                 }
                 return items;

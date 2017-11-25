@@ -17,6 +17,10 @@ export class LastSpentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this._loadItems();
+    }
+
+    _loadItems () {
         this.spentItemService.getAll()
             .then((items) => {
                 console.log(JSON.stringify(items));
@@ -26,12 +30,13 @@ export class LastSpentComponent implements OnInit {
 
     editItem(id) {
         console.log('Open edit form for item with ID:' + id);
-        this.routerExtensions.navigate(["/spent-form", id], {
-            transition: {
-                name: "flip",
-                duration: 2000,
-                curve: "linear"
-            }
-        });
+        this.routerExtensions.navigate(["/spent-form", id], {});
+    }
+
+    deleteItem(id) {
+        this.spentItemService.delete(id)
+            .then(() => {
+                this._loadItems();
+            });
     }
 }

@@ -21,7 +21,8 @@
                     <Switch row="4" col="1" class="switch" [(ngModel)]="item.excludeFromSum"></Switch>
                 </StackLayout>
                 <StackLayout>
-                    <Button text="Add item" (tap)="submit()" row="5" col="0" ></Button>
+                    <Button text="Add item" (tap)="createItem()" *ngIf="!item.id" row="5" col="0" ></Button>
+                    <Button text="Update item" (tap)="updateItem()" *ngIf="item.id" row="5" col="0" ></Button>
                     <Button text="Cancel" (tap)="back()" row="5" col="1" ></Button>
                 </StackLayout>
             </StackLayout>

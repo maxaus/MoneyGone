@@ -30,6 +30,10 @@ export class SpentFormComponent {
                     console.log('Adding new item.');
                 } else {
                     console.log('Edit item: ', id);
+                    spentItemService.getById(id)
+                        .then(item => {
+                            this.item = item;
+                        })
                 }
             });
     }
@@ -63,9 +67,17 @@ export class SpentFormComponent {
 
     }
 
-    submit() {
-        console.log('Submit', JSON.stringify(this.item));
+    createItem() {
+        console.log('Create', JSON.stringify(this.item));
         this.spentItemService.create(this.item)
+            .then((item) => {
+                this.routerExtensions.navigate(["/last-spent"], {});
+            });
+    }
+
+    updateItem() {
+        console.log('Update', JSON.stringify(this.item));
+        this.spentItemService.update(this.item)
             .then((item) => {
                 this.routerExtensions.navigate(["/last-spent"], {});
             });
