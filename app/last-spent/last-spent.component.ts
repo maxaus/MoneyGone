@@ -1,4 +1,7 @@
-import { Component } from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {SpentItemService} from "../shared/spent-item.service";
+import {SpentItem} from "../shared/spent-item.model";
+import {RouterExtensions} from "nativescript-angular";
 
 @Component({
     selector: "app-last-spent",
@@ -6,4 +9,29 @@ import { Component } from "@angular/core";
     templateUrl: "./last-spent.component.html",
     styleUrls: ["./last-spent.component.css"],
 })
-export class LastSpentComponent { }
+export class LastSpentComponent implements OnInit {
+
+    public items = [];
+
+    constructor(private spentItemService: SpentItemService, private routerExtensions: RouterExtensions) {
+    }
+
+    ngOnInit(): void {
+        this.spentItemService.getAll()
+            .then((items) => {
+                console.log(JSON.stringify(items));
+                this.items = items;
+            })
+    }
+
+    editItem(id) {
+        console.log('Open edit form for item with ID:' + id);
+        this.routerExtensions.navigate(["/spent-form", id], {
+            transition: {
+                name: "flip",
+                duration: 2000,
+                curve: "linear"
+            }
+        });
+    }
+}

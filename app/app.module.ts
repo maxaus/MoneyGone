@@ -8,6 +8,7 @@ import {AppComponent} from "./app.component";
 import {SpentFormComponent} from "./spent-form/spent-form.component";
 import {LastSpentComponent} from "./last-spent/last-spent.component";
 import {NativeScriptModule} from "nativescript-angular/nativescript.module";
+import {SpentItemService} from "./shared/spent-item.service";
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import {NativeScriptModule} from "nativescript-angular/nativescript.module";
         NativeScriptRouterModule,
         NativeScriptRouterModule.forRoot(routes)
     ],
+    providers: [SpentItemService],
     schemas: [NO_ERRORS_SCHEMA],
     bootstrap: [AppComponent],
 })

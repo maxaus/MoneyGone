@@ -1,15 +1,3 @@
-<!--<StackLayout>
-    <DatePicker [(ngModel)]="item.date"></DatePicker>
-    <TextField
-            hint="Title"
-            returnKeyType="next"
-            [(ngModel)]="item.title"
-            autocorrect="false"
-            autocapitalizationType="none"></TextField>
-    <Switch row="0" col="1" [(ngModel)]="item.excludeFromSum" class="switch"></Switch>
-    <Button text="Add item" (tap)="submit()"></Button>
-    <Button text="Cancel" [nsRouterLink]="['/last-spent']"></Button>
-</StackLayout>-->
 <GridLayout rows="*" columns="*">
     <ScrollView row="0" col="0">
         <GridLayout rows="*" columns="*">
@@ -34,7 +22,7 @@
                 </StackLayout>
                 <StackLayout>
                     <Button text="Add item" (tap)="submit()" row="5" col="0" ></Button>
-                    <Button text="Cancel" [nsRouterLink]="['/last-spent']" row="5" col="1" ></Button>
+                    <Button text="Cancel" (tap)="back()" row="5" col="1" ></Button>
                 </StackLayout>
             </StackLayout>
         </GridLayout>

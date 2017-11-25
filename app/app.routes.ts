@@ -4,5 +4,6 @@ import {LastSpentComponent} from "./last-spent/last-spent.component";
 export const routes = [
     { path: "", redirectTo: "/last-spent", pathMatch: "full" },
     { path: "last-spent", component: LastSpentComponent },
-    { path: "spent-form", component: SpentFormComponent }
+    { path: "spent-form", component: SpentFormComponent },
+    { path: "spent-form/:id", component: SpentFormComponent }
 ];

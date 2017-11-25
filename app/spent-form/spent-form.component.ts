@@ -1,9 +1,12 @@
 import {Component, Input} from "@angular/core";
-import { TextField } from "ui/text-field";
-import { DatePicker } from "ui/date-picker";
-import { Switch } from "ui/switch";
+import {TextField} from "ui/text-field";
+import {DatePicker} from "ui/date-picker";
+import {Switch} from "ui/switch";
 import {SpentItem} from "../shared/spent-item.model";
 import {Page} from "tns-core-modules/ui/page";
+import {SpentItemService} from "../shared/spent-item.service";
+import {PageRoute, RouterExtensions} from "nativescript-angular";
+import "rxjs/add/operator/switchMap";
 
 @Component({
     selector: "app-spent-form",
@@ -13,19 +16,30 @@ import {Page} from "tns-core-modules/ui/page";
 })
 export class SpentFormComponent {
 
-    public item = new SpentItem();
+    public item = new SpentItem(null, null, null, null, false);
 
     public isButtonVisible = false;
     public isItemVisible = false;
 
-    constructor(private page: Page) {
+    constructor(private page: Page, private spentItemService: SpentItemService, private routerExtensions: RouterExtensions, private pageRoute: PageRoute) {
+        this.pageRoute.activatedRoute
+            .switchMap(activatedRoute => activatedRoute.params)
+            .forEach((params) => {
+                let id = +params["id"];
+                if (!id || isNaN(id)) {
+                    console.log('Adding new item.');
+                } else {
+                    console.log('Edit item: ', id);
+                }
+            });
     }
 
     ngOnInit() {
         let datePicker = this.page.getViewById<DatePicker>("datePicker");
-        datePicker.year = 1980;
-        datePicker.month = 2;
-        datePicker.day = 9;
+        let currentDate = new Date();
+        datePicker.year = currentDate.getFullYear();
+        datePicker.month = currentDate.getMonth();
+        datePicker.day = currentDate.getDate();
         datePicker.minDate = new Date(1975, 0, 29);
         datePicker.maxDate = new Date(2045, 4, 12);
     }
@@ -43,7 +57,7 @@ export class SpentFormComponent {
         this.isButtonVisible = true;
         this.isItemVisible = true;
 
-        setTimeout(function() {
+        setTimeout(function () {
             textFielsBDate.dismissSoftInput();
         }, 100);
 
@@ -51,5 +65,13 @@ export class SpentFormComponent {
 
     submit() {
         console.log('Submit', JSON.stringify(this.item));
+        this.spentItemService.create(this.item)
+            .then((item) => {
+                this.routerExtensions.navigate(["/last-spent"], {});
+            });
+    }
+
+    back() {
+        this.routerExtensions.backToPreviousPage();
     }
 }
