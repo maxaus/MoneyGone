@@ -1,4 +1,46 @@
-<StackLayout>
+<!--<StackLayout>
+    <DatePicker [(ngModel)]="item.date"></DatePicker>
+    <TextField
+            hint="Title"
+            returnKeyType="next"
+            [(ngModel)]="item.title"
+            autocorrect="false"
+            autocapitalizationType="none"></TextField>
+    <Switch row="0" col="1" [(ngModel)]="item.excludeFromSum" class="switch"></Switch>
     <Button text="Add item" (tap)="submit()"></Button>
     <Button text="Cancel" [nsRouterLink]="['/last-spent']"></Button>
-</StackLayout>
+</StackLayout>-->
+<GridLayout rows="*" columns="*">
+    <ScrollView row="0" col="0">
+        <GridLayout rows="*" columns="*">
+            <StackLayout class="form">
+                <StackLayout class="input-field">
+                    <Label class="label" text="Date" row="1" col="0" textWrap="true"></Label>
+                    <TextField class="input input-border" id="itemDate" hint="When?" [text]='item.date | date:"dd/MM/yy"' (tap)="showDatePicker()"
+                               row="1" col="1" returnKeyType="done"></TextField>
+                </StackLayout>
+                <StackLayout class="input-field">
+                    <Label class="label" text="Title" row="2" col="0" textWrap="true" ></Label>
+                    <TextField class="input input-border" id="itemTitle" hint="What?" text="" autocorrect="true" [(ngModel)]="item.title" row="2" col="1"></TextField>
+                </StackLayout>
+                <StackLayout class="input-field">
+                    <Label class="label" text="Sum" row="3" col="0" textWrap="true" ></Label>
+                    <TextField class="input input-border" id="itemSum" hint="How much?" text="" keyboardType="number" [(ngModel)]="item.sum" row="3"
+                               col="1"></TextField>
+                </StackLayout>
+                <StackLayout class="input-field">
+                    <Label class="label" text="Exclude from monthly sum" row="4" col="0" textWrap="true" ></Label>
+                    <Switch row="4" col="1" class="switch" [(ngModel)]="item.excludeFromSum"></Switch>
+                </StackLayout>
+                <StackLayout>
+                    <Button text="Add item" (tap)="submit()" row="5" col="0" ></Button>
+                    <Button text="Cancel" [nsRouterLink]="['/last-spent']" row="5" col="1" ></Button>
+                </StackLayout>
+            </StackLayout>
+        </GridLayout>
+    </ScrollView>
+    <StackLayout backgroundColor="white" [visibility]="isItemVisible ? 'visible' : 'collapsed'" row="0" col="0">
+        <DatePicker class="m-15" id="datePicker" #dp [visibility]="isItemVisible ? 'visible' : 'collapsed'"></DatePicker>
+        <Button class="btn btn-primary btn-active" text="Tap to enter the date" (tap)="enterDate()" [visibility]="isButtonVisible ? 'visible' : 'collapsed'"></Button>
+    </StackLayout>
+</GridLayout>

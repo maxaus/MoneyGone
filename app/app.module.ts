@@ -1,4 +1,5 @@
 import {NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
+import {NativeScriptFormsModule} from "nativescript-angular/forms"
 import {NativeScriptRouterModule} from "nativescript-angular";
 
 import {routes} from "./app.routes";
@@ -16,6 +17,7 @@ import {NativeScriptModule} from "nativescript-angular/nativescript.module";
     ],
     imports: [
         NativeScriptModule,
+        NativeScriptFormsModule,
         NativeScriptRouterModule,
         NativeScriptRouterModule.forRoot(routes)
     ],
