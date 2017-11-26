@@ -71,7 +71,7 @@ export class SpentFormComponent {
         console.log('Create', JSON.stringify(this.item));
         this.spentItemService.create(this.item)
             .then((item) => {
-                this.routerExtensions.navigate(["/last-spent"], {});
+                this.routerExtensions.backToPreviousPage();
             });
     }
 
@@ -79,7 +79,7 @@ export class SpentFormComponent {
         console.log('Update', JSON.stringify(this.item));
         this.spentItemService.update(this.item)
             .then((item) => {
-                this.routerExtensions.navigate(["/last-spent"], {});
+                this.routerExtensions.backToPreviousPage();
             });
     }
 

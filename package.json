@@ -2,9 +2,9 @@
 	"description": "NativeScript Application",
 	"license": "SEE LICENSE IN <your-license-filename>",
 	"readme": "NativeScript Application",
-	"repository": "<fill-your-repository-here>",
+	"repository": "https://github.com/maxaus/MoneyGone",
 	"nativescript": {
-		"id": "org.nativescript.MoneyGone",
+		"id": "com.maxaus.moneygone",
 		"tns-android": {
 			"version": "3.3.1"
 		}
@@ -18,7 +18,9 @@
 		"@angular/http": "~4.4.5",
 		"@angular/platform-browser": "~4.4.5",
 		"@angular/router": "~4.4.5",
+		"moment": "^2.19.2",
 		"nativescript-angular": "~4.4.1",
+		"nativescript-cardview": "^2.0.4",
 		"nativescript-numeric-keyboard": "^3.0.3",
 		"nativescript-sqlite": "^1.1.11",
 		"nativescript-theme-core": "~1.0.4",

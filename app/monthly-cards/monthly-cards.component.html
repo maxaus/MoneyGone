@@ -1,0 +1,12 @@
+<StackLayout>
+    <ListView [items]="items" class="list-group">
+        <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+            <GridLayout columns="50px,*" class="list-group-item">
+                <Label col="0" [text]="item.sum"></Label>
+                <Button col="1" text="View" (tap)="openMonthlyItems(item.year, item.month)"></Button>
+            </GridLayout>
+        </ng-template>
+    </ListView>
+
+    <Button text="Add" [nsRouterLink]="['/spent-form']"></Button>
+</StackLayout>
