@@ -81,10 +81,13 @@ export class SpentItemService {
             });
     }
 
-    public getAllGroupedByMonth(): Promise<MonthStats[]> {
+    public getByDateRangeGroupedByMonth(startDate:Date, endDate:Date): Promise<MonthStats[]> {
+        console.log('getByDateRangeGroupedByMonth', startDate, endDate);
         return this.database.all("SELECT strftime('%m', dateAdded) AS month, strftime('%Y', dateAdded) AS year, SUM(sum) As total" +
             " FROM spent" +
-            " GROUP BY year, month ORDER BY year, month DESC")
+            " WHERE strftime('%Y-%m-%d', dateAdded) BETWEEN ? AND ?" +
+            " GROUP BY year, month ORDER BY year, month DESC",
+            [moment(startDate).format('YYYY-MM-DD'), moment(endDate).format('YYYY-MM-DD')])
             .then(rows => {
                 var items = [];
                 for (var row in rows) {

@@ -1,3 +1,20 @@
+<ActionBar title="My ActionBar">
+    <GridLayout rows="auto, auto, *"
+                columns="auto, *">
+        <Label text="Year:"
+               row="0"
+               col="0"
+               fontSize="18"
+               verticalAlignment="bottom"></Label>
+        <DropDown #dd
+                  backroundColor="white"
+                  [items]="years"
+                  [(ngModel)]="selectedIndex"
+                  (selectedIndexChanged)="selectedIndexChanged($event)"
+                  row="0"
+                  col="1"></DropDown>
+    </GridLayout>
+</ActionBar>
 <StackLayout>
     <ListView [items]="items" class="list-group">
         <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
