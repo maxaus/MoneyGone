@@ -1,6 +1,18 @@
-<ActionBar title="My ActionBar"></ActionBar>
+<ActionBar title="My ActionBar">
+    <GridLayout rows="auto,*"
+                columns="30,auto,30">
+        <Button text="<" row="0" col="0" (tap)="showPrevMonth()"></Button>
+        <Label text="{{monthLabel}}"
+               row="0"
+               col="1"
+               fontSize="18"
+               verticalAlignment="bottom"></Label>
+        <Button text=">" row="0" col="2" (tap)="showNextMonth()"></Button>
+        <TextField class="input input-border" hint="Search" text="" [(ngModel)]="query" row="1" col="1"></TextField>
+    </GridLayout>
+</ActionBar>
 <StackLayout>
-    <ListView [items]="items" class="list-group">
+    <ListView [items]="items | search:'title':query" class="list-group">
         <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
             <GridLayout columns="50px,*,*" class="list-group-item">
                 <Label col="0" [text]="item.title"></Label>
