@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 export class SpentItem {
     id: number;
     title: string;
@@ -8,7 +10,7 @@ export class SpentItem {
     constructor(id: number, title: string, sum: number, date: Date, excludeFromSum: boolean) {
         this.id = id;
         this.title = title;
-        this.date = date;
+        this.date = !!date ? moment(date).toDate(): new Date();
         this.sum = sum;
         this.excludeFromSum = excludeFromSum;
     }

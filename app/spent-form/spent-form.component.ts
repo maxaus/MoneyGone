@@ -1,12 +1,14 @@
 import {Component, Input} from "@angular/core";
 import {TextField} from "ui/text-field";
 import {DatePicker} from "ui/date-picker";
+import { EventData } from "data/observable";
 import {Switch} from "ui/switch";
 import {SpentItem} from "../shared/spent-item.model";
 import {Page} from "tns-core-modules/ui/page";
 import {SpentItemService} from "../shared/spent-item.service";
 import {PageRoute, RouterExtensions} from "nativescript-angular";
 import "rxjs/add/operator/switchMap";
+import * as moment from 'moment';
 
 @Component({
     selector: "app-spent-form",
@@ -38,14 +40,14 @@ export class SpentFormComponent {
             });
     }
 
-    ngOnInit() {
-        let datePicker = this.page.getViewById<DatePicker>("datePicker");
-        let currentDate = new Date();
-        datePicker.year = currentDate.getFullYear();
-        datePicker.month = currentDate.getMonth();
-        datePicker.day = currentDate.getDate();
-        datePicker.minDate = new Date(1975, 0, 29);
-        datePicker.maxDate = new Date(2045, 4, 12);
+    onPickerLoaded(args) {
+        let datePicker = <DatePicker>args.object;
+
+        datePicker.year = Number(moment(this.item.date).format('YYYY'));
+        datePicker.month = Number(moment(this.item.date).format('MM'));
+        datePicker.day = Number(moment(this.item.date).format('DD'));
+        datePicker.minDate = moment(this.item.date).subtract(10, 'year').toDate();
+        datePicker.maxDate = moment(this.item.date).add(10, 'year').toDate();
     }
 
     enterDate() {

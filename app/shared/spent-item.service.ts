@@ -38,7 +38,7 @@ export class SpentItemService {
 
     public update(item: SpentItem): Promise<SpentItem> {
         return this.database.execSQL("UPDATE spent SET title=?, sum=?, dateAdded=?, excludeFromSum=? WHERE id=?",
-            [item.title, item.sum, item.date, item.excludeFromSum, item.id])
+            [item.title, item.sum, moment(item.date).format('YYYY-MM-DD'), item.excludeFromSum, item.id])
             .then(id => {
                 console.log("UPDATE RESULT", id);
 
