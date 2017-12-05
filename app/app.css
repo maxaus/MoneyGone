@@ -1,1 +1,9 @@
 @import "nativescript-theme-core/css/core.light.css";
+
+.navbar {
+    background-color: #239dee;
+}
+
+.container {
+    background-color: #206ca7;
+}

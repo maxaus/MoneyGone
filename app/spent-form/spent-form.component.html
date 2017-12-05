@@ -5,8 +5,9 @@
             <StackLayout class="form">
                 <StackLayout class="input-field">
                     <Label class="label" text="Date" row="1" col="0" textWrap="true"></Label>
-                    <TextField class="input input-border" id="itemDate" hint="When?" [text]='item.date | date:"dd/MM/yy"' (tap)="showDatePicker()"
+                    <TextField class="input input-border" id="itemDate" required hint="When?" [text]='item.date | date:"dd/MM/yy"' (tap)="showDatePicker()"
                                row="1" col="1" returnKeyType="done"></TextField>
+                    <Label class="validation" [visibility]="item.date ? 'collapse' : 'visible'" text="Field is required" ></Label>
                 </StackLayout>
                 <StackLayout class="input-field">
                     <Label class="label" text="Title" row="2" col="0" textWrap="true" ></Label>
@@ -14,8 +15,9 @@
                 </StackLayout>
                 <StackLayout class="input-field">
                     <Label class="label" text="Sum" row="3" col="0" textWrap="true" ></Label>
-                    <TextField class="input input-border" id="itemSum" hint="How much?" text="" keyboardType="number" [(ngModel)]="item.sum" row="3"
-                               col="1"></TextField>
+                    <TextField class="input input-border" id="itemSum" required hint="How much?" text="" keyboardType="number" [(ngModel)]="item.sum" row="3"
+                               col="1" #element #elementModel="ngModel"></TextField>
+                    <Label class="validation" [visibility]="elementModel.valid ? 'collapse' : 'visible'" text="Field is required" ></Label>
                 </StackLayout>
                 <StackLayout class="input-field">
                     <Label class="label" text="Exclude from monthly sum" row="4" col="0" textWrap="true" ></Label>
@@ -31,6 +33,6 @@
     </ScrollView>
     <StackLayout backgroundColor="white" [visibility]="isItemVisible ? 'visible' : 'collapsed'" row="0" col="0">
         <DatePicker class="m-15" id="datePicker" #dp [visibility]="isItemVisible ? 'visible' : 'collapsed'" (loaded)="onPickerLoaded($event)"></DatePicker>
-        <Button class="btn btn-primary btn-active" text="Tap to enter the date" (tap)="enterDate()" [visibility]="isButtonVisible ? 'visible' : 'collapsed'"></Button>
+        <Button class="btn btn-primary btn-active" text="OK" (tap)="enterDate()" [visibility]="isButtonVisible ? 'visible' : 'collapsed'"></Button>
     </StackLayout>
 </GridLayout>

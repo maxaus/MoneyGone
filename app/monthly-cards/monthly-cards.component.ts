@@ -5,6 +5,7 @@ import {RouterExtensions} from "nativescript-angular";
 import {ListPicker} from "ui/list-picker";
 import * as moment from 'moment';
 import {DropDown, SelectedIndexChangedEventData} from "nativescript-drop-down";
+import {Fab} from "nativescript-floatingactionbutton";
 
 @Component({
     selector: "app-monthly-cards",
@@ -50,5 +51,9 @@ export class MonthlyCardsComponent implements OnInit {
     openMonthlyItems(year, month) {
         console.log('Open monthly items:', year, month);
         this.routerExtensions.navigate(["/last-spent", year, month], {});
+    }
+
+    fabTap (args) {
+        console.log('tapped');
     }
 }
