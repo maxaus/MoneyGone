@@ -1,4 +1,4 @@
-<ActionBar class="navbar" title="My ActionBar">
+<ActionBar class="action-bar" title="My ActionBar">
     <GridLayout rows="auto, auto, *"
                 columns="auto, *">
         <Label text="Year:"
@@ -15,7 +15,7 @@
                   col="1"></DropDown>
     </GridLayout>
 </ActionBar>
-<StackLayout class="container">
+<StackLayout>
     <ListView [items]="items" class="list-group">
         <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
             <GridLayout columns="50px,*" class="list-group-item">
