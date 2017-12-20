@@ -5,7 +5,6 @@ import {RouterExtensions} from "nativescript-angular";
 import {ListPicker} from "ui/list-picker";
 import * as moment from 'moment';
 import {DropDown, SelectedIndexChangedEventData} from "nativescript-drop-down";
-import {Fab} from "nativescript-floatingactionbutton";
 
 @Component({
     selector: "app-monthly-cards",

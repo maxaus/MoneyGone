@@ -5,7 +5,7 @@
             <StackLayout class="form">
                 <StackLayout class="input-field">
                     <Label class="label font-weight-bold m-b-5" text="Date" row="1" col="0" textWrap="true"></Label>
-                    <TextField class="input" id="itemDate" required hint="When?" [text]='item.date | date:"dd/MM/yy"' (tap)="showDatePicker()"
+                    <TextField class="input" id="itemDate" required hint="When?" [text]='item.date | date:"shortDate"' (tap)="showDatePicker()"
                                row="1" col="1" returnKeyType="done"></TextField>
                     <StackLayout class="hr-light"></StackLayout>
                     <Label class="text-danger" [visibility]="item.date ? 'collapse' : 'visible'" text="Field is required" ></Label>

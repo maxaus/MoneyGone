@@ -1,7 +1,8 @@
 import {platformNativeScript} from "nativescript-angular/platform-static";
 import {AppModuleNgFactory} from "./app.module.ngfactory";
-import {registerElement} from "nativescript-angular";
+import * as elementRegistryModule from 'nativescript-angular/element-registry';
 
-registerElement('Fab', () => require('nativescript-floatingactionbutton').Fab);
+elementRegistryModule.registerElement("CardView", () => require("nativescript-cardview").CardView);
+elementRegistryModule.registerElement("Fab", () => require("nativescript-floatingactionbutton").Fab);
 
 platformNativeScript().bootstrapModuleFactory(AppModuleNgFactory);

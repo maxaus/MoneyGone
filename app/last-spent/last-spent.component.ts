@@ -3,6 +3,7 @@ import {SpentItemService} from "../shared/spent-item.service";
 import {SpentItem} from "../shared/spent-item.model";
 import {PageRoute, RouterExtensions} from "nativescript-angular";
 import * as moment from 'moment';
+import {SwipeGestureEventData} from "tns-core-modules/ui/gestures";
 
 @Component({
     selector: "app-last-spent",

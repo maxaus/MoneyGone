@@ -16,14 +16,20 @@
     </GridLayout>
 </ActionBar>
 <StackLayout>
-    <ListView [items]="items" class="list-group">
-        <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
-            <GridLayout columns="50px,*" class="list-group-item">
-                <Label col="0" [text]="item.sum"></Label>
-                <Button col="1" text="View" (tap)="openMonthlyItems(item.year, item.month)"></Button>
-            </GridLayout>
-        </ng-template>
-    </ListView>
+    <CardView class="card" *ngFor="let item of items">
+        <StackLayout class="spent" (tap)="openMonthlyItems(item.year, item.month)">>
+            <Label [text]="item.month" class="month-label"></Label>
+            <Label [text]="item.sum" class="sum-label"></Label>
+        </StackLayout>
+    </CardView>
 
     <Button text="Add" [nsRouterLink]="['/spent-form']"></Button>
+    <GridLayout rows="*, auto">
+        <Fab (tap)="fabTap()"
+             row="1"
+             icon="res://icon"
+             rippleColor="#f1f1f1"
+             class="fab-button">
+        </Fab>
+    </GridLayout>
 </StackLayout>
