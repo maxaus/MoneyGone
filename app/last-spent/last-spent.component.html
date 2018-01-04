@@ -1,24 +1,24 @@
 <ActionBar class="action-bar" title="My ActionBar">
-    <GridLayout columns="auto, *, auto">
+    <GridLayout columns="auto,*,auto,70">
         <Button text="&#xf0d9;" class="font-awesome" (tap)="showPrevMonth()" horizontalAlignment="left"></Button>
-        <Label text="{{monthLabel}}"
-               col="1"
-               fontSize="18"
-               verticalAlignment="middle"></Label>
+        <Label text="{{monthLabel}}" col="1" class="date"></Label>
         <Button text="&#xf0da;" class="font-awesome" col="2" (tap)="showNextMonth()" horizontalAlignment="right"></Button>
+        <Button text="&#xf055;" class="font-awesome" col="3" [nsRouterLink]="['/spent-form']"></Button>
     </GridLayout>
 </ActionBar>
 <StackLayout>
-    <TextField class="input input-border" hint="Search" text="" [(ngModel)]="query"></TextField>
+    <SearchBar hint="Search" text="" [(ngModel)]="query"
+               color="#696969" textFieldBackgroundColor="white" textFieldHintColor="#d3d3d3"></SearchBar>
     <ListView [items]="items | search:'title':query" class="list-group">
         <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
-            <GridLayout columns="50px,*,*" class="list-group-item">
-                <Label col="0" [text]="item.title"></Label>
-                <Button col="1" text="Edit" (tap)="editItem(item.id)"></Button>
-                <Button col="2" text="Delete" (tap)="deleteItem(item.id)"></Button>
+            <GridLayout columns="*,auto,50" class="list-group-item" (tap)="editItem(item.id)">
+                <GridLayout rows="auto,auto" col="0">
+                    <Label row="0" [text]="item.date| date: 'MMM dd'" class="date"></Label>
+                    <Label row="1" [text]="item.title" class="description"></Label>
+                </GridLayout>
+                <Label col="1" [text]="item.sum" class="sum"></Label>
+                <Button col="2" text="&#xf00d;" class="font-awesome delete btn btn-outline btn-rounded-sm" (tap)="deleteItem(item.id)"></Button>
             </GridLayout>
         </ng-template>
     </ListView>
-
-    <Button text="Add" [nsRouterLink]="['/spent-form']"></Button>
 </StackLayout>

@@ -32,12 +32,6 @@ export class MonthlyCardsComponent implements OnInit {
         this._loadItems();
     }
 
-    public selectedIndexChanged(args: SelectedIndexChangedEventData) {
-        this.picked = this.years[args.newIndex];
-        console.log("Picked year: " + this.picked);
-        this._loadItems();
-    }
-
     _loadItems() {
         console.log("Selected year: " + this.picked);
         this.spentItemService.getByDateRangeGroupedByMonth(moment(this.picked + '-01-01').startOf('year').toDate(), moment(this.picked + '-01-01').endOf('year').toDate())
@@ -52,7 +46,13 @@ export class MonthlyCardsComponent implements OnInit {
         this.routerExtensions.navigate(["/last-spent", year, month], {});
     }
 
-    fabTap (args) {
-        console.log('tapped');
+    showPrevYear () {
+        this.picked -= 1;
+        this._loadItems();
+    }
+
+    showNextYear () {
+        this.picked += 1;
+        this._loadItems();
     }
 }

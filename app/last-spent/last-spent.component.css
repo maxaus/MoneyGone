@@ -1,0 +1,29 @@
+.list-group-item .date {
+    font-size: 12px;
+    color: #cecece;
+}
+
+.list-group-item .description {
+    font-size: 14px;
+    color: #595959;
+}
+
+.list-group-item .sum {
+    font-size: 16px;
+    font-weight: bold;
+    color: #006621;
+}
+
+.list-group-item .delete {
+    color: #ff0000;
+    margin-left: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.action-bar .date {
+    font-size: 18px;
+    font-weight: bold;
+    horizontal-align: center;
+    vertical-align: center;
+}

@@ -1,35 +1,18 @@
 <ActionBar class="action-bar" title="My ActionBar">
-    <GridLayout rows="auto, auto, *"
-                columns="auto, *">
-        <Label text="Year:"
-               row="0"
-               col="0"
-               fontSize="18"
-               verticalAlignment="bottom"></Label>
-        <DropDown #dd
-                  backroundColor="white"
-                  [items]="years"
-                  [(ngModel)]="selectedIndex"
-                  (selectedIndexChanged)="selectedIndexChanged($event)"
-                  row="0"
-                  col="1"></DropDown>
+    <GridLayout columns="auto,*,auto,70">
+        <Button text="&#xf0d9;" class="font-awesome" (tap)="showPrevYear()" horizontalAlignment="left"></Button>
+        <Label text="{{picked}}" col="1" class="date"></Label>
+        <Button text="&#xf0da;" class="font-awesome" col="2" (tap)="showNextYear()" horizontalAlignment="right"></Button>
+        <Button text="&#xf055;" class="font-awesome" col="3" [nsRouterLink]="['/spent-form']"></Button>
     </GridLayout>
 </ActionBar>
 <StackLayout>
-    <CardView class="card" *ngFor="let item of items">
-        <StackLayout class="spent" (tap)="openMonthlyItems(item.year, item.month)">>
-            <Label [text]="item.month" class="month-label"></Label>
-            <Label [text]="item.sum" class="sum-label"></Label>
-        </StackLayout>
-    </CardView>
-
-    <Button text="Add" [nsRouterLink]="['/spent-form']"></Button>
-    <GridLayout rows="*, auto">
-        <Fab (tap)="fabTap()"
-             row="1"
-             icon="res://icon"
-             rippleColor="#f1f1f1"
-             class="fab-button">
-        </Fab>
-    </GridLayout>
+    <ListView [items]="items" class="list-group">
+        <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
+            <GridLayout columns="*,auto" class="list-group-item" (tap)="openMonthlyItems(item.year, item.month)">
+                <Label col="0" [text]="item.month" class="description"></Label>
+                <Label col="1" [text]="item.sum" class="sum"></Label>
+            </GridLayout>
+        </ng-template>
+    </ListView>
 </StackLayout>
