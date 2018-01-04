@@ -8,7 +8,7 @@
 android {  
   defaultConfig {  
     generatedDensities = []
-    applicationId = "com.maxaus.mgone"
+    applicationId = "com.mbaev.mgone"
   }  
   aaptOptions {  
     additionalParameters "--no-version-vectors"  

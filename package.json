@@ -4,7 +4,7 @@
 	"readme": "NativeScript Application",
 	"repository": "https://github.com/maxaus/MoneyGone",
 	"nativescript": {
-		"id": "com.maxaus.mgone",
+		"id": "com.mbaev.mgone",
 		"tns-android": {
 			"version": "3.3.1"
 		}
