@@ -10,8 +10,7 @@
 
 .list-group-item .sum {
     font-size: 16px;
-    font-weight: bold;
-    color: #006621;
+    color: #42a948;
 }
 
 .list-group-item .delete {
@@ -22,8 +21,18 @@
 }
 
 .action-bar .date {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     horizontal-align: center;
     vertical-align: center;
+}
+
+.action-bar .btn {
+    font-size: 18px;
+    max-height: 24px;
+    max-width: 24px;
+    min-height: 24px;
+    min-width: 24px;
+    padding: 4px 4px 4px 4px;
+    margin: 6px 6px 6px 6px;
 }

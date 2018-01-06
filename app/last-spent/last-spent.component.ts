@@ -1,9 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {SpentItemService} from "../shared/spent-item.service";
-import {SpentItem} from "../shared/spent-item.model";
 import {PageRoute, RouterExtensions} from "nativescript-angular";
+import { confirm } from "ui/dialogs";
 import * as moment from 'moment';
-import {SwipeGestureEventData} from "tns-core-modules/ui/gestures";
 
 @Component({
     selector: "app-last-spent",
@@ -17,7 +16,12 @@ export class LastSpentComponent implements OnInit {
     public monthLabel:string;
     private startDate:Date;
     private endDate:Date;
-
+    private deleteConfirmOptions = {
+        title: "Confirm Delete",
+        message: "Do you really want to remove this item?",
+        okButtonText: "Yes",
+        cancelButtonText: "No"
+    };
 
     constructor(private spentItemService: SpentItemService, private routerExtensions: RouterExtensions, private pageRoute: PageRoute) {
         this.pageRoute.activatedRoute
@@ -61,9 +65,13 @@ export class LastSpentComponent implements OnInit {
     }
 
     deleteItem(id) {
-        this.spentItemService.delete(id)
-            .then(() => {
-                this._loadItems();
-            });
+        confirm(this.deleteConfirmOptions).then((result: boolean) => {
+            if (result) {
+                this.spentItemService.delete(id)
+                    .then(() => {
+                        this._loadItems();
+                    });
+            }
+        });
     }
 }

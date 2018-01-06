@@ -27,8 +27,10 @@
                     <Switch class="switch right" [checked]="item.excludeFromSum" horizontalAlignment="left" [(ngModel)]="item.excludeFromSum"></Switch>
                 </StackLayout>
                 <GridLayout columns="auto,auto" rows="auto" horizontalAlignment="center">
-                    <Button text="ADD" (tap)="createItem()" *ngIf="!item.id" col="0" class="btn btn-primary" width="35%"></Button>
-                    <Button text="UPDATE" (tap)="updateItem()" *ngIf="item.id" col="0" class="btn btn-primary" width="35%"></Button>
+                    <Button text="ADD" (tap)="createItem()" *ngIf="!item.id" col="0" class="btn btn-primary"
+                            width="35%"></Button>
+                    <Button text="UPDATE" (tap)="updateItem()" *ngIf="item.id" col="0" class="btn btn-primary"
+                            width="35%"></Button>
                     <Button text="CANCEL" (tap)="back()" col="1" class="btn btn-outline" width="35%"></Button>
                 </GridLayout>
             </StackLayout>

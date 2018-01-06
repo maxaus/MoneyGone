@@ -70,19 +70,23 @@ export class SpentFormComponent {
     }
 
     createItem() {
-        console.log('Create', JSON.stringify(this.item));
-        this.spentItemService.create(this.item)
-            .then((item) => {
-                this.routerExtensions.backToPreviousPage();
-            });
+        if (this.item.sum && this.item.date) {
+            console.log('Create', JSON.stringify(this.item));
+            this.spentItemService.create(this.item)
+                .then((item) => {
+                    this.routerExtensions.backToPreviousPage();
+                });
+        }
     }
 
     updateItem() {
-        console.log('Update', JSON.stringify(this.item));
-        this.spentItemService.update(this.item)
-            .then((item) => {
-                this.routerExtensions.backToPreviousPage();
-            });
+        if (this.item.sum && this.item.date) {
+            console.log('Update', JSON.stringify(this.item));
+            this.spentItemService.update(this.item)
+                .then((item) => {
+                    this.routerExtensions.backToPreviousPage();
+                });
+        }
     }
 
     back() {

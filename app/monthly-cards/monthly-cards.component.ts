@@ -1,10 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {SpentItemService} from "../shared/spent-item.service";
-import {SpentItem} from "../shared/spent-item.model";
 import {RouterExtensions} from "nativescript-angular";
-import {ListPicker} from "ui/list-picker";
 import * as moment from 'moment';
-import {DropDown, SelectedIndexChangedEventData} from "nativescript-drop-down";
 
 @Component({
     selector: "app-monthly-cards",
@@ -17,7 +14,9 @@ export class MonthlyCardsComponent implements OnInit {
     public items = [];
     public years: Array<number>;
     public picked: number;
-    public selectedIndex = 0;
+    public totalSum = 123000;
+    private currentDate = new Date();
+    private months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     constructor(private spentItemService: SpentItemService, private routerExtensions: RouterExtensions) {
         this.years = [];
@@ -34,10 +33,43 @@ export class MonthlyCardsComponent implements OnInit {
 
     _loadItems() {
         console.log("Selected year: " + this.picked);
+
+
         this.spentItemService.getByDateRangeGroupedByMonth(moment(this.picked + '-01-01').startOf('year').toDate(), moment(this.picked + '-01-01').endOf('year').toDate())
             .then((items) => {
                 console.log(JSON.stringify(items));
-                this.items = items;
+                this.items = [];
+
+                for (let i = 11; i >= 0; i--) {
+                    // Add month if and only if it's
+                    if (this.picked < this.currentDate.getFullYear() ||
+                        (this.picked === this.currentDate.getFullYear() && i <= this.currentDate.getMonth())) {
+
+                        const monthItem = items.find((item) => {
+                            return Number(item.month) === i+1
+                        });
+                        console.log('monthItem', JSON.stringify(monthItem));
+                        if (!!monthItem) {
+                            this.items.push({
+                                sum: monthItem.sum,
+                                month: monthItem.month,
+                                monthLabel: this.months[i],
+                                year: monthItem.year,
+                                hasData: true
+                            })
+                        } else {
+                            this.items.push({
+                                sum: '-',
+                                month: i,
+                                monthLabel: this.months[i],
+                                year: this.picked,
+                                hasData: false
+                            })
+                        }
+                    }
+                }
+
+                console.log(JSON.stringify(this.items))
             })
     }
 
@@ -46,12 +78,12 @@ export class MonthlyCardsComponent implements OnInit {
         this.routerExtensions.navigate(["/last-spent", year, month], {});
     }
 
-    showPrevYear () {
+    showPrevYear() {
         this.picked -= 1;
         this._loadItems();
     }
 
-    showNextYear () {
+    showNextYear() {
         this.picked += 1;
         this._loadItems();
     }

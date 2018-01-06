@@ -1,9 +1,9 @@
 <ActionBar class="action-bar" title="My ActionBar">
-    <GridLayout columns="auto,*,auto,70">
-        <Button text="&#xf0d9;" class="font-awesome" (tap)="showPrevMonth()" horizontalAlignment="left"></Button>
+    <GridLayout columns="50,*,50,50">
+        <Button text="&#xf0d9;" class="font-awesome btn btn-primary" (tap)="showPrevMonth()" horizontalAlignment="left"></Button>
         <Label text="{{monthLabel}}" col="1" class="date"></Label>
-        <Button text="&#xf0da;" class="font-awesome" col="2" (tap)="showNextMonth()" horizontalAlignment="right"></Button>
-        <Button text="&#xf055;" class="font-awesome" col="3" [nsRouterLink]="['/spent-form']"></Button>
+        <Button text="&#xf0da;" class="font-awesome btn btn-primary" col="2" (tap)="showNextMonth()" horizontalAlignment="right"></Button>
+        <Button text="&#xf055;" class="font-awesome btn btn-primary" col="3" [nsRouterLink]="['/spent-form']"></Button>
     </GridLayout>
 </ActionBar>
 <StackLayout>
