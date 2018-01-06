@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {SpentItemService} from "../shared/spent-item.service";
 import {PageRoute, RouterExtensions} from "nativescript-angular";
-import { confirm } from "ui/dialogs";
+import {action, confirm} from "ui/dialogs";
 import * as moment from 'moment';
 
 @Component({
@@ -13,14 +13,24 @@ import * as moment from 'moment';
 export class LastSpentComponent implements OnInit {
 
     public items = [];
-    public monthLabel:string;
-    private startDate:Date;
-    private endDate:Date;
+    public monthLabel: string;
+    private startDate: Date;
+    private endDate: Date;
+    private sortCol = 'dateAdded';
+    private sortDir = 'DESC';
+    public totalSum = 0;
+    public excludedSum = 0;
     private deleteConfirmOptions = {
         title: "Confirm Delete",
         message: "Do you really want to remove this item?",
         okButtonText: "Yes",
         cancelButtonText: "No"
+    };
+    private sortOptions = {
+        title: "Sort By",
+        message: "Choose sort direction",
+        cancelButtonText: "Cancel",
+        actions: ["Recent first", "Old first", "Expensive first", "Cheap first"]
     };
 
     constructor(private spentItemService: SpentItemService, private routerExtensions: RouterExtensions, private pageRoute: PageRoute) {
@@ -35,25 +45,28 @@ export class LastSpentComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log('init');
         this._loadItems();
     }
 
-    _loadItems () {
+    _loadItems() {
         this.monthLabel = moment(this.startDate).format('MMM, YYYY');
-        this.spentItemService.getByDateRange(this.startDate, this.endDate)
+        this.spentItemService.getByDateRange(this.startDate, this.endDate, this.sortCol, this.sortDir)
             .then((items) => {
                 console.log(JSON.stringify(items));
                 this.items = items;
+                this.totalSum = (!!items && items.length) ? items.map((item) => item.excludeFromSum ? 0 : item.sum).reduce((sum, x) => sum + x) : 0;
+                this.excludedSum = (!!items && items.length) ? items.map((item) => item.excludeFromSum ? item.sum : 0).reduce((sum, x) => sum + x) : 0;
             })
     }
 
-    showPrevMonth () {
+    showPrevMonth() {
         this.startDate = moment(this.startDate).subtract(1, 'month').startOf('month').toDate();
         this.endDate = moment(this.endDate).subtract(1, 'month').endOf('month').toDate();
         this._loadItems();
     }
 
-    showNextMonth () {
+    showNextMonth() {
         this.startDate = moment(this.startDate).add(1, 'month').startOf('month').toDate();
         this.endDate = moment(this.endDate).add(1, 'month').endOf('month').toDate();
         this._loadItems();
@@ -73,5 +86,40 @@ export class LastSpentComponent implements OnInit {
                     });
             }
         });
+    }
+
+    _getSortExp(option) {
+        switch (option) {
+            case 'New first':
+                return ['dateAdded','DESC'];
+            case 'Old first':
+                return ['dateAdded','ASC'];
+            case 'Expensive first':
+                return ['sum','Desc'];
+            case 'Cheap first':
+                return ['sum','ASC'];
+            default:
+                return ['dateAdded','DESC'];
+        }
+    }
+    openSortDialog() {
+        action(this.sortOptions).then((result) => {
+            let sortExpressionParts = this._getSortExp(result);
+            this.sortCol = sortExpressionParts[0];
+            this.sortDir = sortExpressionParts[1];
+            this._loadItems();
+        });
+    }
+
+    onSearchLayoutLoaded(event) {
+        if (event.object.android) {
+            event.object.android.setFocusableInTouchMode(true);
+        }
+    }
+
+    onSearchBarLoaded(event) {
+        if (event.object.android) {
+            event.object.android.clearFocus();
+        }
     }
 }

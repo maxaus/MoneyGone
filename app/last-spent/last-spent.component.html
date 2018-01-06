@@ -1,14 +1,20 @@
 <ActionBar class="action-bar" title="My ActionBar">
-    <GridLayout columns="50,*,50,50">
-        <Button text="&#xf0d9;" class="font-awesome btn btn-primary" (tap)="showPrevMonth()" horizontalAlignment="left"></Button>
-        <Label text="{{monthLabel}}" col="1" class="date"></Label>
-        <Button text="&#xf0da;" class="font-awesome btn btn-primary" col="2" (tap)="showNextMonth()" horizontalAlignment="right"></Button>
-        <Button text="&#xf055;" class="font-awesome btn btn-primary" col="3" [nsRouterLink]="['/spent-form']"></Button>
+    <GridLayout columns="50,50,*,50,50">
+        <Button text="&#xf060;" col="0" class="font-awesome btn btn-primary" [nsRouterLink]="['/monthly-cards']"></Button>
+        <Button text="&#xf0d9;" col="1" class="font-awesome btn btn-primary" (tap)="showPrevMonth()" horizontalAlignment="left"></Button>
+        <Label text="{{monthLabel}}" col="2" class="date"></Label>
+        <Button text="&#xf0da;" class="font-awesome btn btn-primary" col="3" (tap)="showNextMonth()" horizontalAlignment="right"></Button>
+        <Button text="&#xf055;" class="font-awesome btn btn-primary" col="4" [nsRouterLink]="['/spent-form']"></Button>
     </GridLayout>
 </ActionBar>
-<StackLayout>
-    <SearchBar hint="Search" text="" [(ngModel)]="query"
+<StackLayout (loaded)="onSearchLayoutLoaded($event)">
+    <SearchBar hint="Search" text="" [(ngModel)]="query" (loaded)="onSearchBarLoaded($event)"
                color="#696969" textFieldBackgroundColor="white" textFieldHintColor="#d3d3d3"></SearchBar>
+    <GridLayout columns="2*,*" rows="24,24" class="controls">
+        <Label text="Total: {{totalSum}}" col="0" row="0" class="total-sum"></Label>
+        <Label text="Excluded: {{excludedSum}}" col="0" row="1" class="excluded-sum"></Label>
+        <Button text="&#xf15d;" col="1" rowSpan="2" class="font-awesome btn btn-outline" (tap)="openSortDialog()" horizontalAlignment="right"></Button>
+    </GridLayout>
     <ListView [items]="items | search:'title':query" class="list-group">
         <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
             <GridLayout columns="*,auto,50" class="list-group-item" (tap)="editItem(item.id)">

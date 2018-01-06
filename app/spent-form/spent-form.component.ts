@@ -74,7 +74,9 @@ export class SpentFormComponent {
             console.log('Create', JSON.stringify(this.item));
             this.spentItemService.create(this.item)
                 .then((item) => {
-                    this.routerExtensions.backToPreviousPage();
+                    const year = Number(moment(this.item.date).format('YYYY'));
+                    const month = Number(moment(this.item.date).format('MM'));
+                    this.routerExtensions.navigate(["/last-spent", year, month], {});
                 });
         }
     }
@@ -84,7 +86,9 @@ export class SpentFormComponent {
             console.log('Update', JSON.stringify(this.item));
             this.spentItemService.update(this.item)
                 .then((item) => {
-                    this.routerExtensions.backToPreviousPage();
+                    const year = Number(moment(this.item.date).format('YYYY'));
+                    const month = Number(moment(this.item.date).format('MM'));
+                    this.routerExtensions.navigate(["/last-spent", year, month], {});
                 });
         }
     }

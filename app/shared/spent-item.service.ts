@@ -83,15 +83,17 @@ export class SpentItemService {
 
     public getByDateRangeGroupedByMonth(startDate:Date, endDate:Date): Promise<MonthStats[]> {
         console.log('getByDateRangeGroupedByMonth', startDate, endDate);
-        return this.database.all("SELECT strftime('%m', dateAdded) AS month, strftime('%Y', dateAdded) AS year, SUM(sum) As total" +
+        return this.database.all("SELECT strftime('%m', dateAdded) AS month, strftime('%Y', dateAdded) AS year, " +
+            "SUM(CASE WHEN excludeFromSum='false' THEN sum ELSE 0 END) As total, " +
+            "COUNT(*) As count" +
             " FROM spent" +
-            " WHERE NOT(excludeFromSum) AND strftime('%Y-%m-%d', dateAdded) BETWEEN ? AND ?" +
+            " WHERE strftime('%Y-%m-%d', dateAdded) BETWEEN ? AND ?" +
             " GROUP BY year, month ORDER BY year, month DESC",
             [moment(startDate).format('YYYY-MM-DD'), moment(endDate).format('YYYY-MM-DD')])
             .then(rows => {
                 var items = [];
                 for (var row in rows) {
-                    items.push(new MonthStats(rows[row][2], rows[row][0], rows[row][1]));
+                    items.push(new MonthStats(rows[row][2], rows[row][3], rows[row][0], rows[row][1]));
                 }
                 return items;
             }, error => {
@@ -99,9 +101,9 @@ export class SpentItemService {
             });
     }
 
-    public getByDateRange(startDate:Date, endDate:Date): Promise<SpentItem[]> {
-        console.log('getByDateRange', startDate, endDate);
-        return this.database.all("SELECT * FROM spent WHERE strftime('%Y-%m-%d', dateAdded) BETWEEN ? AND ?",
+    public getByDateRange(startDate:Date, endDate:Date, sortCol:String, sortDir:String): Promise<SpentItem[]> {
+        console.log('getByDateRange', startDate, endDate, sortCol, sortDir);
+        return this.database.all("SELECT * FROM spent WHERE strftime('%Y-%m-%d', dateAdded) BETWEEN ? AND ? ORDER BY " + sortCol + ' ' + sortDir,
             [moment(startDate).format('YYYY-MM-DD'), moment(endDate).format('YYYY-MM-DD')])
             .then(rows => {
                 var items = [];

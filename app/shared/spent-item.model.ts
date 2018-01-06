@@ -7,11 +7,11 @@ export class SpentItem {
     sum: number;
     excludeFromSum: boolean;
 
-    constructor(id: number, title: string, sum: number, date: Date, excludeFromSum: boolean) {
+    constructor(id: number, title: string, sum: number, date: Date, excludeFromSum: any) {
         this.id = id;
         this.title = title;
         this.date = !!date ? moment(date).toDate(): new Date();
         this.sum = sum;
-        this.excludeFromSum = excludeFromSum;
+        this.excludeFromSum = excludeFromSum == "true";
     }
 }

@@ -14,7 +14,7 @@ export class MonthlyCardsComponent implements OnInit {
     public items = [];
     public years: Array<number>;
     public picked: number;
-    public totalSum = 123000;
+    public totalSum = 0;
     private currentDate = new Date();
     private months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -55,7 +55,7 @@ export class MonthlyCardsComponent implements OnInit {
                                 month: monthItem.month,
                                 monthLabel: this.months[i],
                                 year: monthItem.year,
-                                hasData: true
+                                hasData: monthItem.count > 0
                             })
                         } else {
                             this.items.push({
@@ -68,6 +68,7 @@ export class MonthlyCardsComponent implements OnInit {
                         }
                     }
                 }
+                this.totalSum = (!!items && items.length) ? items.map((item) => item.sum).reduce((sum, x) => sum + x) : 0;
 
                 console.log(JSON.stringify(this.items))
             })

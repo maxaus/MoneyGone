@@ -1,4 +1,4 @@
-<ActionBar class="action-bar" [title]="!item.id? 'Add Expense' : 'Update Expense'"></ActionBar>
+<ActionBar class="action-bar" [title]="!item.id? 'Add Item' : 'Update Item'"></ActionBar>
 <GridLayout rows="*" columns="*">
     <ScrollView row="0" col="0">
         <GridLayout rows="*" columns="*">
@@ -23,8 +23,9 @@
                     <Label class="text-danger" [visibility]="elementModel.valid ? 'collapse' : 'visible'" text="Field is required" ></Label>
                 </StackLayout>
                 <StackLayout class="input-field">
-                    <Label class="label font-weight-bold m-b-5" text="Exclude from monthly sum"></Label>
+                    <Label class="label font-weight-bold m-b-5" text="Exclude from monthly sum*"></Label>
                     <Switch class="switch right" [checked]="item.excludeFromSum" horizontalAlignment="left" [(ngModel)]="item.excludeFromSum"></Switch>
+                    <Label class="text-muted" textWrap="true" text="*Item won't influence monthly 'Total' value, will be summarized in separate 'Excluded' value." ></Label>
                 </StackLayout>
                 <GridLayout columns="auto,auto" rows="auto" horizontalAlignment="center">
                     <Button text="ADD" (tap)="createItem()" *ngIf="!item.id" col="0" class="btn btn-primary"

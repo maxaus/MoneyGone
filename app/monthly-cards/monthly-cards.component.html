@@ -7,10 +7,8 @@
     </GridLayout>
 </ActionBar>
 <StackLayout>
-    <GridLayout columns="*,*,*" rows="30">
-        <Label text="" col="0"></Label>
-        <Label text="Total:" col="1"></Label>
-        <Label text="{{totalSum}}" col="2"></Label>
+    <GridLayout columns="2*,*" rows="40" class="controls">
+        <Label text="Total: {{totalSum}}" col="0" class="total-sum"></Label>
     </GridLayout>
     <ListView [items]="items" class="list-group">
         <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
