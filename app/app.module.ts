@@ -10,7 +10,6 @@ import {LastSpentComponent} from "./last-spent/last-spent.component";
 import {NativeScriptModule} from "nativescript-angular/nativescript.module";
 import {SpentItemService} from "./shared/spent-item.service";
 import {MonthlyCardsComponent} from "./monthly-cards/monthly-cards.component";
-import {DropDownModule} from "nativescript-drop-down/angular";
 import {SearchPipe} from "./shared/search-pipe";
 
 @NgModule({
@@ -22,7 +21,6 @@ import {SearchPipe} from "./shared/search-pipe";
         MonthlyCardsComponent
     ],
     imports: [
-        DropDownModule,
         NativeScriptModule,
         NativeScriptFormsModule,
         NativeScriptRouterModule,
