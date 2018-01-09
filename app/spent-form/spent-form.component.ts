@@ -47,7 +47,7 @@ export class SpentFormComponent {
         datePicker.month = Number(moment(this.item.date).format('MM'));
         datePicker.day = Number(moment(this.item.date).format('DD'));
         datePicker.minDate = moment(this.item.date).subtract(10, 'year').toDate();
-        datePicker.maxDate = moment(this.item.date).add(10, 'year').toDate();
+        datePicker.maxDate = moment(this.item.date).endOf('day').toDate();
     }
 
     enterDate() {

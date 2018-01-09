@@ -2,20 +2,23 @@
     <GridLayout columns="auto,*,auto,70">
         <Button text="&#xf0d9;" class="font-awesome btn btn-primary" (tap)="showPrevYear()" horizontalAlignment="left"></Button>
         <Label text="{{picked}}" col="1" class="date"></Label>
-        <Button text="&#xf0da;" class="font-awesome btn btn-primary" col="2" (tap)="showNextYear()" horizontalAlignment="right"></Button>
+        <Button text="&#xf0da;" class="font-awesome btn btn-primary" col="2" (tap)="showNextYear()" horizontalAlignment="right"
+                *ngIf="displayNextYear"></Button>
+        <Button text="&#xf0da;" class="font-awesome btn btn-primary disabled" col="2" horizontalAlignment="right"
+                *ngIf="!displayNextYear"></Button>
         <Button text="&#xf055;" class="font-awesome btn btn-primary" col="3" [nsRouterLink]="['/spent-form']"></Button>
     </GridLayout>
 </ActionBar>
 <StackLayout>
     <GridLayout columns="2*,*" rows="40" class="controls">
-        <Label text="Total: {{totalSum}}" col="0" class="total-sum"></Label>
+        <Label text="Total: {{totalSum | number:'1.2-2'}}" col="0" class="total-sum"></Label>
     </GridLayout>
     <ListView [items]="items" class="list-group">
         <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
             <StackLayout>
                 <GridLayout columns="*,auto" class="list-group-item" *ngIf="item.hasData" (tap)="openMonthlyItems(item.year, item.month)">
                     <Label col="0" [text]="item.monthLabel" class="description"></Label>
-                    <Label col="1" [text]="item.sum" class="sum"></Label>
+                    <Label col="1" [text]="item.sum | number:'1.2-2'" class="sum"></Label>
                 </GridLayout>
                 <GridLayout columns="*,auto" class="list-group-item inactive" *ngIf="!item.hasData">
                     <Label col="0" [text]="item.monthLabel" class="description"></Label>

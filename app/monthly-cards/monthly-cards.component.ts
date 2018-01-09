@@ -15,6 +15,7 @@ export class MonthlyCardsComponent implements OnInit {
     public years: Array<number>;
     public picked: number;
     public totalSum = 0;
+    public displayNextYear: boolean;
     private currentDate = new Date();
     private months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -22,6 +23,7 @@ export class MonthlyCardsComponent implements OnInit {
         this.years = [];
         const currentYear = (new Date()).getFullYear();
         this.picked = currentYear;
+        this.displayNextYear = false;
         for (let i = 0; i < 30; i++) {
             this.years.push(currentYear - i);
         }
@@ -81,11 +83,13 @@ export class MonthlyCardsComponent implements OnInit {
 
     showPrevYear() {
         this.picked -= 1;
+        this.displayNextYear = this.picked < this.currentDate.getFullYear();
         this._loadItems();
     }
 
     showNextYear() {
         this.picked += 1;
+        this.displayNextYear = this.picked < this.currentDate.getFullYear();
         this._loadItems();
     }
 }

@@ -14,10 +14,12 @@ export class LastSpentComponent implements OnInit {
 
     public items = [];
     public monthLabel: string;
+    public displayNextMonth: boolean;
     private startDate: Date;
     private endDate: Date;
     private sortCol = 'dateAdded';
     private sortDir = 'DESC';
+    private currentDate = new Date();
     public totalSum = 0;
     public excludedSum = 0;
     private deleteConfirmOptions = {
@@ -39,8 +41,12 @@ export class LastSpentComponent implements OnInit {
             .forEach((params) => {
                 let year = +params["year"];
                 let month = +params["month"];
+
                 this.startDate = moment(year + '-' + month + '-01').startOf('month').toDate();
                 this.endDate = moment(year + '-' + month + '-01').endOf('month').toDate();
+                let currentMoment = moment(this.startDate);
+                this.displayNextMonth = currentMoment.year() < this.currentDate.getFullYear() ||
+                    (this.currentDate.getFullYear() == currentMoment.year() && currentMoment.month() < this.currentDate.getMonth());
             });
     }
 
@@ -63,12 +69,20 @@ export class LastSpentComponent implements OnInit {
     showPrevMonth() {
         this.startDate = moment(this.startDate).subtract(1, 'month').startOf('month').toDate();
         this.endDate = moment(this.endDate).subtract(1, 'month').endOf('month').toDate();
+        let currentMoment = moment(this.startDate);
+        console.log(JSON.stringify(this.currentDate.getFullYear()), JSON.stringify(currentMoment.year()));
+        console.log(JSON.stringify(this.currentDate.getMonth()), JSON.stringify(currentMoment.month()));
+        this.displayNextMonth = currentMoment.year() < this.currentDate.getFullYear() ||
+            (this.currentDate.getFullYear() == currentMoment.year() && currentMoment.month() < this.currentDate.getMonth());
         this._loadItems();
     }
 
     showNextMonth() {
         this.startDate = moment(this.startDate).add(1, 'month').startOf('month').toDate();
         this.endDate = moment(this.endDate).add(1, 'month').endOf('month').toDate();
+        let currentMoment = moment(this.startDate);
+        this.displayNextMonth = currentMoment.year() < this.currentDate.getFullYear() ||
+            (this.currentDate.getFullYear() == currentMoment.year() && currentMoment.month() < this.currentDate.getMonth());
         this._loadItems();
     }
 
