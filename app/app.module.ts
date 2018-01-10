@@ -5,20 +5,20 @@ import {NativeScriptRouterModule} from "nativescript-angular";
 import {routes} from "./app.routes";
 
 import {AppComponent} from "./app.component";
-import {SpentFormComponent} from "./spent-form/spent-form.component";
-import {LastSpentComponent} from "./last-spent/last-spent.component";
+import {ExpenseFormComponent} from "./expense-form/expense-form.component";
+import {MonthlyListComponent} from "./montly-list/monthly-list.component";
 import {NativeScriptModule} from "nativescript-angular/nativescript.module";
 import {SpentItemService} from "./shared/spent-item.service";
-import {MonthlyCardsComponent} from "./monthly-cards/monthly-cards.component";
+import {AnnualListComponent} from "./annual-list/annual-list.component";
 import {SearchPipe} from "./shared/search-pipe";
 
 @NgModule({
     declarations: [
         SearchPipe,
         AppComponent,
-        SpentFormComponent,
-        LastSpentComponent,
-        MonthlyCardsComponent
+        ExpenseFormComponent,
+        MonthlyListComponent,
+        AnnualListComponent
     ],
     imports: [
         NativeScriptModule,

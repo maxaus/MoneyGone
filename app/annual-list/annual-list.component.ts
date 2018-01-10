@@ -4,12 +4,12 @@ import {RouterExtensions} from "nativescript-angular";
 import * as moment from 'moment';
 
 @Component({
-    selector: "app-monthly-cards",
+    selector: "app-annual-list",
     moduleId: module.id,
-    templateUrl: "./monthly-cards.component.html",
-    styleUrls: ["./monthly-cards.component.css"],
+    templateUrl: "./annual-list.component.html",
+    styleUrls: ["./annual-list.component.css"],
 })
-export class MonthlyCardsComponent implements OnInit {
+export class AnnualListComponent implements OnInit {
 
     public items = [];
     public years: Array<number>;
@@ -78,7 +78,7 @@ export class MonthlyCardsComponent implements OnInit {
 
     openMonthlyItems(year, month) {
         console.log('Open monthly items:', year, month);
-        this.routerExtensions.navigate(["/last-spent", year, month], {});
+        this.routerExtensions.navigate(["/monthly-list", year, month], {});
     }
 
     showPrevYear() {

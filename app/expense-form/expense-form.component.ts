@@ -11,12 +11,12 @@ import "rxjs/add/operator/switchMap";
 import * as moment from 'moment';
 
 @Component({
-    selector: "app-spent-form",
+    selector: "app-expense-form",
     moduleId: module.id,
-    templateUrl: "./spent-form.component.html",
-    styleUrls: ["./spent-form.component.css"],
+    templateUrl: "./expense-form.component.html",
+    styleUrls: ["./expense-form.component.css"],
 })
-export class SpentFormComponent {
+export class ExpenseFormComponent {
 
     public item = new SpentItem(null, null, null, null, false);
 
@@ -76,7 +76,7 @@ export class SpentFormComponent {
                 .then((item) => {
                     const year = Number(moment(this.item.date).format('YYYY'));
                     const month = Number(moment(this.item.date).format('MM'));
-                    this.routerExtensions.navigate(["/last-spent", year, month], {});
+                    this.routerExtensions.navigate(["/monthly-list", year, month], {});
                 });
         }
     }
@@ -88,7 +88,7 @@ export class SpentFormComponent {
                 .then((item) => {
                     const year = Number(moment(this.item.date).format('YYYY'));
                     const month = Number(moment(this.item.date).format('MM'));
-                    this.routerExtensions.navigate(["/last-spent", year, month], {});
+                    this.routerExtensions.navigate(["/monthly-list", year, month], {});
                 });
         }
     }

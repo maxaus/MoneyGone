@@ -5,12 +5,12 @@ import {action, confirm} from "ui/dialogs";
 import * as moment from 'moment';
 
 @Component({
-    selector: "app-last-spent",
+    selector: "app-monthly-list",
     moduleId: module.id,
-    templateUrl: "./last-spent.component.html",
-    styleUrls: ["./last-spent.component.css"],
+    templateUrl: "./monthly-list.component.html",
+    styleUrls: ["./monthly-list.component.css"],
 })
-export class LastSpentComponent implements OnInit {
+export class MonthlyListComponent implements OnInit {
 
     public items = [];
     public monthLabel: string;
@@ -88,7 +88,7 @@ export class LastSpentComponent implements OnInit {
 
     editItem(id) {
         console.log('Open edit form for item with ID:' + id);
-        this.routerExtensions.navigate(["/spent-form", id], {});
+        this.routerExtensions.navigate(["/expense-form", id], {});
     }
 
     deleteItem(id) {
