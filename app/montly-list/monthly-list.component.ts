@@ -1,7 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {SpentItemService} from "../shared/spent-item.service";
 import {PageRoute, RouterExtensions} from "nativescript-angular";
+import {ListViewEventData} from "nativescript-pro-ui/listview";
 import {action, confirm} from "ui/dialogs";
+import * as Utils from "utils/utils";
 import * as moment from 'moment';
 
 @Component({
@@ -15,6 +17,7 @@ export class MonthlyListComponent implements OnInit {
     public items = [];
     public monthLabel: string;
     public displayNextMonth: boolean;
+    private selected: number;
     private startDate: Date;
     private endDate: Date;
     private sortCol = 'dateAdded';
@@ -86,12 +89,14 @@ export class MonthlyListComponent implements OnInit {
         this._loadItems();
     }
 
-    editItem(id) {
+    editItem(args: ListViewEventData) {
+        let id = this.items[args.index].id;
         console.log('Open edit form for item with ID:' + id);
         this.routerExtensions.navigate(["/expense-form", id], {});
     }
 
-    deleteItem(id) {
+    deleteItem() {
+        let id = this.items[this.selected].id;
         confirm(this.deleteConfirmOptions).then((result: boolean) => {
             if (result) {
                 this.spentItemService.delete(id)
@@ -105,17 +110,18 @@ export class MonthlyListComponent implements OnInit {
     _getSortExp(option) {
         switch (option) {
             case 'New first':
-                return ['dateAdded','DESC'];
+                return ['dateAdded', 'DESC'];
             case 'Old first':
-                return ['dateAdded','ASC'];
+                return ['dateAdded', 'ASC'];
             case 'Expensive first':
-                return ['sum','Desc'];
+                return ['sum', 'Desc'];
             case 'Cheap first':
-                return ['sum','ASC'];
+                return ['sum', 'ASC'];
             default:
-                return ['dateAdded','DESC'];
+                return ['dateAdded', 'DESC'];
         }
     }
+
     openSortDialog() {
         action(this.sortOptions).then((result) => {
             let sortExpressionParts = this._getSortExp(result);
@@ -135,5 +141,13 @@ export class MonthlyListComponent implements OnInit {
         if (event.object.android) {
             event.object.android.clearFocus();
         }
+    }
+
+    public onSwipeCellStarted(args: ListViewEventData) {
+        var swipeLimits = args.data.swipeLimits;
+        swipeLimits.threshold = 30 * Utils.layout.getDisplayDensity();
+        swipeLimits.left = 60 * Utils.layout.getDisplayDensity();
+        swipeLimits.right = 60 * Utils.layout.getDisplayDensity();
+        this.selected = args.index;
     }
 }

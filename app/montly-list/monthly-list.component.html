@@ -18,16 +18,29 @@
         <Label text="Excluded: {{excludedSum | number:'1.2-2'}}" col="0" row="1" class="excluded-sum"></Label>
         <Button text="&#xf15d;" col="1" rowSpan="2" class="font-awesome btn btn-outline" (tap)="openSortDialog()" horizontalAlignment="right"></Button>
     </GridLayout>
-    <ListView [items]="items | search:'title':query" class="list-group">
-        <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
-            <GridLayout columns="*,auto,50" class="list-group-item" (tap)="editItem(item.id)">
+
+    <RadListView
+            class="list-group"
+            [items]="items | search:'title':query"
+            swipeActions="true"
+            (itemTap)="editItem($event)"
+            (itemSwipeProgressStarted)="onSwipeCellStarted($event)">
+        <ng-template tkListItemTemplate let-item="item">
+            <GridLayout columns="*,auto" class="list-group-item">
                 <GridLayout rows="auto,auto" col="0">
                     <Label row="0" [text]="item.date| date: 'MMM dd'" class="date"></Label>
                     <Label row="1" [text]="item.title" class="description"></Label>
                 </GridLayout>
                 <Label col="1" [text]="item.sum | number:'1.2-2'" class="sum"></Label>
-                <Button col="2" text="&#xf00d;" class="font-awesome delete btn btn-outline" (tap)="deleteItem(item.id)"></Button>
             </GridLayout>
         </ng-template>
-    </ListView>
+        <GridLayout *tkListItemSwipeTemplate columns="60,*,60" class="listItemSwipeGridLayout">
+            <StackLayout class="deleteViewStackLayout" col="0" (tap)="deleteItem()">
+                <Label text="&#xf014;" class="font-awesome" verticalAlignment="middle" horizontalAlignment="center"></Label>
+            </StackLayout>
+            <StackLayout class="deleteViewStackLayout" col="2" (tap)="deleteItem()">
+                <Label text="&#xf014;" class="font-awesome" verticalAlignment="middle" horizontalAlignment="center"></Label>
+            </StackLayout>
+        </GridLayout>
+    </RadListView>
 </StackLayout>

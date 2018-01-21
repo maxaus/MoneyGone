@@ -1,6 +1,7 @@
 import {NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
 import {NativeScriptFormsModule} from "nativescript-angular/forms"
 import {NativeScriptRouterModule} from "nativescript-angular";
+import { NativeScriptUIListViewModule } from "nativescript-pro-ui/listview/angular";
 
 import {routes} from "./app.routes";
 
@@ -23,6 +24,7 @@ import {SearchPipe} from "./shared/search-pipe";
     imports: [
         NativeScriptModule,
         NativeScriptFormsModule,
+        NativeScriptUIListViewModule,
         NativeScriptRouterModule,
         NativeScriptRouterModule.forRoot(routes)
     ],

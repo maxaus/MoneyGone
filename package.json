@@ -21,6 +21,7 @@
 		"moment": "^2.19.2",
 		"nativescript-angular": "~4.4.1",
 		"nativescript-numeric-keyboard": "^3.0.3",
+		"nativescript-pro-ui": "^3.3.0",
 		"nativescript-sqlite": "^1.1.11",
 		"nativescript-theme-core": "~1.0.4",
 		"reflect-metadata": "~0.1.8",

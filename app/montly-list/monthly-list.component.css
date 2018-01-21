@@ -25,3 +25,10 @@
     min-width: 24px;
     border-color: #f4f4f4;
 }
+
+.deleteViewStackLayout {
+    padding-top: 36px;
+    font-size: 24px;
+    background-color: #ef473a;
+    color: #ffffff;
+}
