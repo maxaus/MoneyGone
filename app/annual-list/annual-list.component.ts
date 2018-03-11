@@ -3,6 +3,9 @@ import {SpentItemService} from "../shared/spent-item.service";
 import {RouterExtensions} from "nativescript-angular";
 import * as moment from 'moment';
 
+/**
+ * Component for the list of annual expenses.
+ */
 @Component({
     selector: "app-annual-list",
     moduleId: module.id,
@@ -11,51 +14,85 @@ import * as moment from 'moment';
 })
 export class AnnualListComponent implements OnInit {
 
+    /**
+     * Expense items for selected year
+     * @type {any[]}
+     */
     public items = [];
-    public years: Array<number>;
-    public picked: number;
-    public totalSum = 0;
-    public displayNextYear: boolean;
-    private currentDate = new Date();
-    private months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+    /**
+     * Currently selected year
+     */
+    public selectedYear: number;
+
+    /**
+     * Sum of expenses for selected year
+     * @type {number}
+     */
+    public totalSum = 0;
+
+    /**
+     * If "next year" button should be available (user can't select year after current year)
+     */
+    public displayNextYear: boolean;
+
+    /**
+     * Current date
+     * @type {Date}
+     */
+    private currentDate = new Date();
+
+    /**
+     * Labels for all months in the year
+     * @type {string[]}
+     */
+    private monthLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    /**
+     * Component constructor
+     * @param {SpentItemService} spentItemService
+     * @param {RouterExtensions} routerExtensions
+     */
     constructor(private spentItemService: SpentItemService, private routerExtensions: RouterExtensions) {
-        this.years = [];
-        const currentYear = (new Date()).getFullYear();
-        this.picked = currentYear;
+        this.selectedYear = this.currentDate.getFullYear();
         this.displayNextYear = false;
-        for (let i = 0; i < 30; i++) {
-            this.years.push(currentYear - i);
-        }
     }
 
+    /**
+     * Init event handler
+     */
     ngOnInit(): void {
         this._loadItems();
     }
 
+    /**
+     * Load annual expenses for selected year
+     * @private
+     */
     _loadItems() {
-        console.log("Selected year: " + this.picked);
+        console.log("Selected year: " + this.selectedYear);
 
 
-        this.spentItemService.getByDateRangeGroupedByMonth(moment(this.picked + '-01-01').startOf('year').toDate(), moment(this.picked + '-01-01').endOf('year').toDate())
+        this.spentItemService.getByDateRangeGroupedByMonth(moment(this.selectedYear + '-01-01').startOf('year').toDate(), moment(this.selectedYear + '-01-01').endOf('year').toDate())
             .then((items) => {
                 console.log(JSON.stringify(items));
                 this.items = [];
 
                 for (let i = 11; i >= 0; i--) {
                     // Add month if and only if it's
-                    if (this.picked < this.currentDate.getFullYear() ||
-                        (this.picked === this.currentDate.getFullYear() && i <= this.currentDate.getMonth())) {
+                    if (this.selectedYear < this.currentDate.getFullYear() ||
+                        (this.selectedYear === this.currentDate.getFullYear() && i <= this.currentDate.getMonth())) {
 
                         const monthItem = items.find((item) => {
                             return Number(item.month) === i+1
                         });
+                        const monthLabel = this.monthLabels[i];
                         console.log('monthItem', JSON.stringify(monthItem));
                         if (!!monthItem) {
                             this.items.push({
                                 sum: monthItem.sum,
                                 month: monthItem.month,
-                                monthLabel: this.months[i],
+                                monthLabel: monthLabel,
                                 year: monthItem.year,
                                 hasData: monthItem.count > 0
                             })
@@ -63,8 +100,8 @@ export class AnnualListComponent implements OnInit {
                             this.items.push({
                                 sum: '-',
                                 month: i,
-                                monthLabel: this.months[i],
-                                year: this.picked,
+                                monthLabel: monthLabel,
+                                year: this.selectedYear,
                                 hasData: false
                             })
                         }
@@ -76,20 +113,31 @@ export class AnnualListComponent implements OnInit {
             })
     }
 
+    /**
+     * Go to the list of monthly expenses
+     * @param year selected year
+     * @param month selected month
+     */
     openMonthlyItems(year, month) {
         console.log('Open monthly items:', year, month);
         this.routerExtensions.navigate(["/monthly-list", year, month], {});
     }
 
+    /**
+     * Load items for the previous year
+     */
     showPrevYear() {
-        this.picked -= 1;
-        this.displayNextYear = this.picked < this.currentDate.getFullYear();
+        this.selectedYear -= 1;
+        this.displayNextYear = this.selectedYear < this.currentDate.getFullYear();
         this._loadItems();
     }
 
+    /**
+     * Load items for the next year
+     */
     showNextYear() {
-        this.picked += 1;
-        this.displayNextYear = this.picked < this.currentDate.getFullYear();
+        this.selectedYear += 1;
+        this.displayNextYear = this.selectedYear < this.currentDate.getFullYear();
         this._loadItems();
     }
 }

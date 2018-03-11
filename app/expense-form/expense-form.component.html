@@ -37,8 +37,8 @@
             </StackLayout>
         </GridLayout>
     </ScrollView>
-    <StackLayout backgroundColor="white" [visibility]="isItemVisible ? 'visible' : 'collapsed'" row="0" col="0">
-        <DatePicker class="m-15" id="datePicker" #dp [visibility]="isItemVisible ? 'visible' : 'collapsed'" (loaded)="onPickerLoaded($event)"></DatePicker>
-        <Button class="btn btn-outline" text="OK" (tap)="enterDate()" [visibility]="isButtonVisible ? 'visible' : 'collapsed'"></Button>
+    <StackLayout backgroundColor="white" [visibility]="isDatePickerVisible ? 'visible' : 'collapsed'" row="0" col="0">
+        <DatePicker class="m-15" id="datePicker" #dp [visibility]="isDatePickerVisible ? 'visible' : 'collapsed'" (loaded)="onDatePickerLoaded($event)"></DatePicker>
+        <Button class="btn btn-outline" text="OK" (tap)="enterDate()" [visibility]="isSelectDateButtonVisible ? 'visible' : 'collapsed'"></Button>
     </StackLayout>
 </GridLayout>

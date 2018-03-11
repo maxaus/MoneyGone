@@ -1,7 +1,7 @@
 <ActionBar class="action-bar" title="My ActionBar">
     <GridLayout columns="auto,*,auto,70">
         <Button text="&#xf0d9;" class="font-awesome btn btn-primary" (tap)="showPrevYear()" horizontalAlignment="left"></Button>
-        <Label text="{{picked}}" col="1" class="date"></Label>
+        <Label text="{{selectedYear}}" col="1" class="date"></Label>
         <Button text="&#xf0da;" class="font-awesome btn btn-primary" col="2" (tap)="showNextYear()" horizontalAlignment="right"
                 *ngIf="displayNextYear"></Button>
         <Button text="&#xf0da;" class="font-awesome btn btn-primary disabled" col="2" horizontalAlignment="right"
