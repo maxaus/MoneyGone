@@ -18,7 +18,7 @@
     "@angular/http": "~4.4.5",
     "@angular/platform-browser": "~4.4.5",
     "@angular/router": "~4.4.5",
-    "moment": "^2.19.2",
+    "moment": "^2.21.0",
     "nativescript-angular": "~4.4.1",
     "nativescript-numeric-keyboard": "^3.0.3",
     "nativescript-pro-ui": "^3.3.0",
